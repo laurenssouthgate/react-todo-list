@@ -3,10 +3,12 @@ import {Task} from "./model/Task.tsx";
 import _LocalStorage from "./util/LocalStorage.tsx";
 import TaskRow from "./component/TaskRow.tsx";
 import {useEffect, useState} from "react";
+import NewTaskModal from "./component/NewTaskModal.tsx";
 
 
 function App() {
     const [tasks, setTasks] = useState<Task[] | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     useEffect(() => {
         const loadedTasks = _LocalStorage.loadTasks()
@@ -45,6 +47,15 @@ function App() {
         handleSaveTasks(updatedTasks)
     }
 
+    const handleNewTask = (task: Task) => {
+        const updatedTasks = tasks !== null ? [...tasks, task] : [task]
+
+        handleSaveTasks(updatedTasks)
+    }
+
+    const handleOpenModal = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
+
     return (
         <div className="main">
             <h1>Todo List</h1>
@@ -68,6 +79,18 @@ function App() {
                     </div>
                 )
 
+            }
+            <button
+                className="new-task-button"
+                onClick={ handleOpenModal }>
+                Add New Task
+            </button>
+            {
+                isModalOpen &&
+                <NewTaskModal
+                    isOpen={ isModalOpen }
+                    onClose={ handleCloseModal }
+                    onAdd={ handleNewTask } />
             }
         </div>
     )
