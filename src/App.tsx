@@ -1,6 +1,6 @@
 import './App.css'
 import {Task} from "./model/Task.tsx";
-import _LocalStorage, {filterTasks} from "./util/LocalStorage.tsx";
+import _LocalStorage from "./util/LocalStorage.tsx";
 import TaskRow from "./component/TaskRow.tsx";
 import {useEffect, useState} from "react";
 import NewTaskModal from "./component/NewTaskModal.tsx";
@@ -50,9 +50,9 @@ function App() {
     const handleDelete = (id: number)=> {
         if (tasks === null) return
 
-        const filteredTasks = filterTasks(tasks, id)
+        const filteredTasks = tasks.filter(task => task.id !== id)
         setTasks(filteredTasks)
-        _LocalStorage.deleteTask(id)
+        _LocalStorage.saveTasks(filteredTasks)
     }
 
     const handleNewTask = (task: Task) => {
@@ -66,7 +66,7 @@ function App() {
 
     return (
         <div className="main">
-            <h1>Todo List</h1>
+            <h1>Task Handler</h1>
             {
                 tasks === null || tasks.length === 0 ? (
                     <div className="no-tasks">
