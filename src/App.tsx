@@ -1,6 +1,6 @@
 import './App.css'
 import {Task} from "./model/Task.tsx";
-import _LocalStorage from "./util/LocalStorage.tsx";
+import _LocalStorage, {filterTasks} from "./util/LocalStorage.tsx";
 import TaskRow from "./component/TaskRow.tsx";
 import {useEffect, useState} from "react";
 import NewTaskModal from "./component/NewTaskModal.tsx";
@@ -35,7 +35,7 @@ function App() {
         handleSaveTasks(updatedTasks)
     }
 
-    const handleEdit = (id : number, text: string)=> {
+    const handleEdit = (id: number, text: string)=> {
         if (tasks === null) return
 
         const updatedTasks = tasks.map(task => task.id === id ?
@@ -45,6 +45,14 @@ function App() {
             } : task)
 
         handleSaveTasks(updatedTasks)
+    }
+
+    const handleDelete = (id: number)=> {
+        if (tasks === null) return
+
+        const filteredTasks = filterTasks(tasks, id)
+        setTasks(filteredTasks)
+        _LocalStorage.deleteTask(id)
     }
 
     const handleNewTask = (task: Task) => {
@@ -73,6 +81,7 @@ function App() {
                                     key={ task.id }
                                     onComplete={ handleToggleComplete }
                                     onEdit={ handleEdit }
+                                    onDelete={ handleDelete }
                                 />
                             ))
                         }
