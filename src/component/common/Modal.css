@@ -37,4 +37,9 @@
             }
         }
     }
+
+    @media only screen and (max-width: 980px) {
+        width: calc(100% - 5vw);
+        max-width: unset;
+    }
 }
