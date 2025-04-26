@@ -1,5 +1,12 @@
 import {Task} from "../model/Task.tsx";
 import {ChangeEvent, useState} from "react";
+import tick from "../assets/tick.svg"
+import undo from "../assets/undo.svg"
+import edit from "../assets/edit.svg"
+import save from "../assets/save.svg"
+import deleteIcon from "../assets/delete.svg"
+
+import './TaskRow.css'
 
 type TaskRowProps = {
     task: Task
@@ -49,25 +56,30 @@ export default function TaskRow({ task, onComplete, onEdit, onDelete } : TaskRow
                         <span className="text">{ task.text }</span>
                     )
             }
-            <button
-                type="button"
-                data-action="mark-done"
-                onClick={ handleComplete }>
-                Completed
-            </button>
-            <button
-                type="button"
-                data-action="edit"
-                onClick={ handleEdit }>
-                Edit
-            </button>
-            <button
-                type="button"
-                data-action="delete"
-                onClick={ handleDelete }
+            <div className="buttons">
+                <button
+                    type="button"
+                    data-action="mark-done"
+                    className="button button--square"
+                    onClick={handleComplete}>
+                    <img src={ task.completed ? undo : tick } alt="Mark completed" width={ 16 } />
+                </button>
+                <button
+                    type="button"
+                    data-action="edit"
+                    className="button button--square"
+                    onClick={handleEdit}>
+                    <img src={ editing ? save : edit } alt="Edit task" width={ 16 } />
+                </button>
+                <button
+                    type="button"
+                    data-action="delete"
+                    className="button button--square"
+                    onClick={handleDelete}
                 >
-                Delete
-            </button>
+                    <img src={ deleteIcon } alt="Edit task" width={16}/>
+                </button>
+            </div>
         </div>
     )
 }

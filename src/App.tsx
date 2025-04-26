@@ -3,6 +3,7 @@ import {Task} from "./model/Task.tsx";
 import _LocalStorage from "./util/LocalStorage.tsx";
 import TaskRow from "./component/TaskRow.tsx";
 import {useEffect, useState} from "react";
+import add from "./assets/add.svg"
 import NewTaskModal from "./component/NewTaskModal.tsx";
 
 
@@ -66,41 +67,44 @@ function App() {
 
     return (
         <div className="main">
-            <h1>Task Handler</h1>
-            {
-                tasks === null || tasks.length === 0 ? (
-                    <div className="no-tasks">
-                        <span>You do not currently have any tasks saved, click the button below to add a new task</span>
-                    </div>
-                ) : (
-                    <div className="tasks">
-                        {
-                            tasks.map(task => (
-                                <TaskRow
-                                    task={ task }
-                                    key={ task.id }
-                                    onComplete={ handleToggleComplete }
-                                    onEdit={ handleEdit }
-                                    onDelete={ handleDelete }
-                                />
-                            ))
-                        }
-                    </div>
-                )
+            <div className='task-window'>
+                <h1>Todo Handler</h1>
+                {
+                    tasks === null || tasks.length === 0 ? (
+                        <div className="no-tasks" onClick={ handleOpenModal }>
+                            <span>You do not currently have any tasks saved, click to add a new task</span>
+                        </div>
+                    ) : (
+                        <div className="tasks">
+                            {
+                                tasks.map(task => (
+                                    <TaskRow
+                                        task={ task }
+                                        key={ task.id }
+                                        onComplete={ handleToggleComplete }
+                                        onEdit={ handleEdit }
+                                        onDelete={ handleDelete }
+                                    />
+                                ))
+                            }
+                        </div>
+                    )
 
-            }
-            <button
-                className="new-task-button"
-                onClick={ handleOpenModal }>
-                Add New Task
-            </button>
-            {
-                isModalOpen &&
-                <NewTaskModal
-                    isOpen={ isModalOpen }
-                    onClose={ handleCloseModal }
-                    onAdd={ handleNewTask } />
-            }
+                }
+                <button
+                    className="button"
+                    onClick={ handleOpenModal }>
+                    <img src={ add } alt="Add New Task" width={ 12 } /> Add New Task
+                </button>
+                {
+                    isModalOpen &&
+                    <NewTaskModal
+                        isOpen={ isModalOpen }
+                        onClose={ handleCloseModal }
+                        onAdd={ handleNewTask } />
+                }
+            </div>
+
         </div>
     )
 }

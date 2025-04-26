@@ -1,0 +1,17 @@
+.new-task-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    & input {
+        height: 1.5rem;
+        font-family: "Atkinson Hyperlegible Mono", sans-serif;
+    }
+
+    .button {
+        width: fit-content;
+        margin-top: 1rem;
+        align-self: center;
+    }
+}
